@@ -1,3 +1,4 @@
+import Link from "next/link"
 import { useEffect, useState } from "react"
 
 const HeroMainPage = () => {
@@ -24,6 +25,7 @@ const HeroMainPage = () => {
             {
                 data.map((d) => {
                     return <>
+                        <Link href={`/heroes/${d.id}`}>{d.id}</Link>
                         <div>{d.id}</div>
                         <div>{d.name}</div>
                         <img src={d.image} alt="hero image" />
