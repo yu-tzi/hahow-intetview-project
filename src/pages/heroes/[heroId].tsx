@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useEffect, useState } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
+import HeroList from './heroList'
 
 const HeroDetail = () => {
     interface HeroDatil {
@@ -36,5 +37,17 @@ const HeroDetail = () => {
         </>
     )
 }
+
+const getLayout = (page: ReactElement) => {
+    return (
+        <>
+            <HeroList />
+            {page}
+        </>
+
+    )
+}
+
+HeroDetail.getLayout = getLayout
 
 export default HeroDetail
