@@ -1,4 +1,4 @@
-import { Aguafina_Script } from 'next/font/google'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -27,6 +27,7 @@ const HeroDetail = () => {
     if (!data) return <p>No profile data</p>
     return (
         <>
+            <Link href={`/heroes`}>Beck To HOME page</Link>
             <div>{`now id: ${heroId}`}</div>
             <div>{`agi: ${data.agi}`}</div>
             <div>{`int: ${data.int}`}</div>
