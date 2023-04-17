@@ -79,7 +79,7 @@ const HeroDetail = () => {
             ))}
             <div>Remain Count : {remainCount}</div>
             <button onClick={onClickSendData}>SEND</button>
-            <Link href={`/heroes`}>Beck To HOME page</Link>
+            <Link href={`/heroes`}>TO HERO PAGE</Link>
         </>
     )
 }

@@ -1,8 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
+import Link from 'next/link'
 
 export default function Home() {
   return (
@@ -15,6 +12,7 @@ export default function Home() {
       </Head>
       <main>
         <h1>This is homepage</h1>
+        <Link href={`/heroes`}>TO HERO PAGE</Link>
       </main>
     </>
   )

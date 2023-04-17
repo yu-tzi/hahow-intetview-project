@@ -1,10 +1,16 @@
 import { ReactElement } from "react"
 import HeroList from "./heroList"
+import styled from 'styled-components'
+
+const Wording = styled.div`
+    width: fit-content;
+    margin: 30px auto;
+`
 
 const HeroMainPage = () => {
     return (
         <>
-            <div>123</div>
+            <Wording>Click the card for more info.</Wording>
         </>
     )
 }
