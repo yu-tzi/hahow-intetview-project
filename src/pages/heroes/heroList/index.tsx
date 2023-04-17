@@ -55,8 +55,8 @@ const HeroList = () => {
             {
                 data.map((d) => {
                     return (
-                        <Link href={`/heroes/${d.id}`} passHref legacyBehavior>
-                            <CardBody key={d.id}>
+                        <Link href={`/heroes/${d.id}`} key={d.id} passHref legacyBehavior>
+                            <CardBody>
                                 <Image
                                     src={d.image}
                                     alt={`picture of ${d.name}`}
