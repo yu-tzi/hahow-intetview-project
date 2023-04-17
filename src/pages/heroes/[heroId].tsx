@@ -1,7 +1,49 @@
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
 import HeroList from './heroList'
+import styled from 'styled-components'
+
+const DetailedContainer = styled.div`
+    display: flex;
+    max-width: 850px;
+    padding: 20px 45px;
+    flex-flow: row wrap;
+    border: 1px solid #504646;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    justify-content: space-between;
+`
+
+const PanelContainer = styled.div`
+`
+const SinglePanel = styled.div`
+    margin: 20px;
+    display: flex;
+`
+const HeroTitle = styled.div`
+    font-size: 20px;
+    margin-right: 15px;
+    width: 25px;
+    text-align: center;
+`
+const HeroNumber = styled.div`
+    font-size: 20px;
+    width: 25px;
+    text-align: center;
+`
+const PanelButton = styled.button`
+    margin: 0px 10px;
+`
+const ActionArea = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+`
+const ActionButton = styled.button``
+const RemainCount = styled.div`
+    margin-bottom: 10px;
+`
 
 const HeroDetail = () => {
     interface HeroDatil {
@@ -67,20 +109,24 @@ const HeroDetail = () => {
 
     }
     return (
-        <>
+        <DetailedContainer>
+            <PanelContainer>
             {Object.keys(data).map((key) => (
                 <>
-                    <div>
-                        <button disabled={!remainCount} onClick={() => { onClickButtonAction(key, 1) }}>+</button>
-                        <div>{`${key} : ${data[key]}`}</div>
-                        <button disabled={data[key] < 1} onClick={() => { onClickButtonAction(key, -1) }}>-</button>
-                    </div>
+                    <SinglePanel>
+                        <HeroTitle>{key}</HeroTitle>
+                        <PanelButton disabled={!remainCount} onClick={() => { onClickButtonAction(key, 1) }}>+</PanelButton>
+                        <HeroNumber>{data[key]}</HeroNumber>
+                        <PanelButton disabled={data[key] < 1} onClick={() => { onClickButtonAction(key, -1) }}>-</PanelButton>
+                    </SinglePanel>
                 </>
             ))}
-            <div>Remain Count : {remainCount}</div>
-            <button onClick={onClickSendData}>SEND</button>
-            <Link href={`/heroes`}>TO HERO PAGE</Link>
-        </>
+            </PanelContainer>
+            <ActionArea>
+            <RemainCount>剩餘點數 : {remainCount}</RemainCount>
+                <ActionButton onClick={onClickSendData}>儲存</ActionButton>
+            </ActionArea>
+        </DetailedContainer>
     )
 }
 
