@@ -111,19 +111,17 @@ const HeroDetail = () => {
     return (
         <DetailedContainer>
             <PanelContainer>
-            {Object.keys(data).map((key) => (
-                <>
-                    <SinglePanel>
+                {Object.keys(data).map((key, index) => (
+                    <SinglePanel key={key+index}>
                         <HeroTitle>{key}</HeroTitle>
                         <PanelButton disabled={!remainCount} onClick={() => { onClickButtonAction(key, 1) }}>+</PanelButton>
                         <HeroNumber>{data[key]}</HeroNumber>
                         <PanelButton disabled={data[key] < 1} onClick={() => { onClickButtonAction(key, -1) }}>-</PanelButton>
                     </SinglePanel>
-                </>
-            ))}
+                ))}
             </PanelContainer>
             <ActionArea>
-            <RemainCount>剩餘點數 : {remainCount}</RemainCount>
+                <RemainCount>剩餘點數 : {remainCount}</RemainCount>
                 <ActionButton onClick={onClickSendData}>儲存</ActionButton>
             </ActionArea>
         </DetailedContainer>
