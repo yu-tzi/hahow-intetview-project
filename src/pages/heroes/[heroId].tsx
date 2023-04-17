@@ -5,10 +5,7 @@ import HeroList from './heroList'
 
 const HeroDetail = () => {
     interface HeroDatil {
-        agi: number,
-        int: number,
-        luk: number,
-        str: number
+        [key: string]: number
     }
     const router = useRouter()
     const { heroId } = router.query
@@ -43,7 +40,7 @@ const HeroDetail = () => {
     }, [data])
     if (isLoading) return <p>Loading...</p>
     if (!data) return <p>No profile data</p>
-    const onClickButtonAction = (key, count) => {
+    const onClickButtonAction = (key: string, count: number) => {
         console.log(key + count)
         setData({
             ...data,
@@ -51,7 +48,7 @@ const HeroDetail = () => {
         })
     }
     const onClickSendData = async () => {
-        if((!remainCount || remainCount > 0) && remainCount !== 0){
+        if ((!remainCount || remainCount > 0) && remainCount !== 0) {
             alert('剩餘點數不得為 0 以上')
             return
         }
@@ -63,7 +60,7 @@ const HeroDetail = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(data),
-        }).then((res)=>{
+        }).then((res) => {
             console.log(res)
             setLoading(false)
         })
@@ -74,7 +71,7 @@ const HeroDetail = () => {
             {Object.keys(data).map((key) => (
                 <>
                     <div>
-                        <button disabled={remainCount < 1} onClick={() => { onClickButtonAction(key, 1) }}>+</button>
+                        <button disabled={!remainCount} onClick={() => { onClickButtonAction(key, 1) }}>+</button>
                         <div>{`${key} : ${data[key]}`}</div>
                         <button disabled={data[key] < 1} onClick={() => { onClickButtonAction(key, -1) }}>-</button>
                     </div>
