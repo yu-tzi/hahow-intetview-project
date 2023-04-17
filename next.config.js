@@ -11,5 +11,8 @@ module.exports = {
       fileName: true,
       minify: true,
     }
+  },
+  images: {
+    domains: ['i.annihil.us']
   }
 }
