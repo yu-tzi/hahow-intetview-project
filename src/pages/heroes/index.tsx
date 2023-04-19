@@ -1,5 +1,5 @@
 import { ReactElement } from "react"
-import HeroList from "./heroList"
+import HeroList from "../../component/HeroList"
 import { Wording } from '@/style/pages/heroIndex.styled';
 
 const HeroMainPage = () => {

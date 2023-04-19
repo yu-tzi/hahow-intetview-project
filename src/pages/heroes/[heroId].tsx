@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
-import HeroList from './heroList'
+import HeroList from '../../component/HeroList'
 import { DetailedContainer, ActionArea, ActionButton, RemainCount } from '@/style/pages/heroDetail.styled';
 import { getObjectSumNum } from '../../utils/getObjectSumNum';
 import { fetchHeroProfile, patchHeroProfile } from '../../utils/fetchApi';
