@@ -3,22 +3,29 @@ import { useEffect, useState } from "react"
 import Image from 'next/image'
 import { useRouter } from "next/router"
 import { CardsContainer, CardBody, CardName } from '@/style/component/heroList.styled';
+import { fetchHeroList } from "../common/fetchApi";
 
+interface HeroListData {
+    id: string, name: string, image: string
+}
 const HeroList = () => {
-    interface HeroDate {
-        id: string, name: string, image: string
-    }
-    const [data, setData] = useState<HeroDate[] | null>(null)
+    const [data, setData] = useState<HeroListData[] | null>(null)
     const [isLoading, setLoading] = useState(false)
     const [pageId, setPageId] = useState<string>('')
     const router = useRouter()
     useEffect(() => {
         setLoading(true)
-        fetch('https://hahow-recruit.herokuapp.com/heroes')
-            .then((res) => res.json())
+        fetchHeroList()
             .then((data) => {
-                console.log(data)
-                setData(data)
+                if (data) {
+                    setData(data)
+                    setLoading(false)
+                } else {
+                    setData(null)
+                    setLoading(false)
+                }
+            }).catch(() => {
+                setData(null)
                 setLoading(false)
             })
     }, [])
@@ -26,7 +33,6 @@ const HeroList = () => {
         const id = router?.query?.heroId?.[0] || ''
         setPageId(id)
     }, [router])
-
     if (isLoading) return <p>Loading...</p>
     if (!data) return <p>No profile data</p>
     return (

@@ -4,9 +4,9 @@ import { Wording } from '@/style/pages/heroIndex.styled';
 
 const HeroMainPage = () => {
     return (
-        <>
+        <main>
             <Wording>Click the card for more info.</Wording>
-        </>
+        </main>
     )
 }
 

@@ -2,78 +2,78 @@ import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
 import HeroList from './heroList'
 import { DetailedContainer, PanelContainer, SinglePanel, HeroTitle, HeroNumber, PanelButton, ActionArea, ActionButton, RemainCount } from '@/style/pages/heroDetail.styled';
+import { getObjectSumNum } from './common/util';
+import { fetchHeroProfile, patchHeroProfile } from './common/fetchApi';
+
+interface HeroDtail {
+    [key: string]: number
+}
 
 const HeroDetail = () => {
-    interface HeroDatil {
-        [key: string]: number
-    }
     const router = useRouter()
-    const { heroId } = router.query
-    const [data, setData] = useState<HeroDatil | null>(null)
+    const heroIdList = router.query?.heroId
+    const heroId = heroIdList?.[0]
+    const [data, setData] = useState<HeroDtail | null>(null)
     const [remainCount, setRemainCount] = useState<number | null>(null)
     const [availableCount, setAvailableCount] = useState<number | null>(null)
     const [isLoading, setLoading] = useState(false)
     useEffect(() => {
         if (!heroId && heroId !== '0') {
-            return
+            return;
         }
-        setLoading(true)
-        fetch(`https://hahow-recruit.herokuapp.com/heroes/${heroId}/profile`)
-            .then((res) => res.json())
-            .then((data: HeroDatil) => {
-                console.log(data)
-                setData(data)
-                setLoading(false)
-                const sumData = Object.values(data).reduce((acc, cur) => acc + cur);
-                console.log(sumData)
-                setAvailableCount(sumData)
-            }).catch(() => {
-                setData(null)
-                setLoading(false)
+        setLoading(true);
+        fetchHeroProfile(heroId[0])
+            .then((data) => {
+                if (data) {
+                    setData(data);
+                    setLoading(false);
+                    setAvailableCount(getObjectSumNum(data));
+                } else {
+                    setData(null);
+                    setLoading(false);
+                }
             })
-    }, [heroId])
-    const checkRemain = () => {
-        console.log(availableCount)
+            .catch(() => {
+                setData(null);
+                setLoading(false);
+            });
+    }, [heroId]);
+    useEffect(() => {
         if (!data || (!availableCount && availableCount !== 0)) {
             return
         }
-        const nowSumData = Object.values(data).reduce((acc, cur) => acc + cur);
-        setRemainCount(availableCount - nowSumData)
-    }
-    useEffect(() => {
-        console.log(data)
-        checkRemain();
+        const nowSumData = getObjectSumNum(data)
+        nowSumData && setRemainCount(availableCount - nowSumData)
     }, [data])
-    if (isLoading) return <p>Loading...</p>
-    if (!data) return <p>No profile data</p>
     const onClickButtonAction = (key: string, count: number) => {
-        console.log(key + count)
-        setData({
-            ...data,
-            [`${key}`]: data[key] + count,
-        })
+        setData((prevData) => {
+            if (!prevData) {
+                return null;
+            }
+            return {
+                ...prevData,
+                [`${key}`]: prevData[key] + count,
+            };
+        });
     }
     const onClickSendData = async () => {
         if ((!remainCount || remainCount > 0) && remainCount !== 0) {
             alert('剩餘點數不得為 0 以上')
             return
         }
+        if ((!heroId && heroId !== '0') || !data) {
+            return
+        }
         setLoading(true)
-        console.log(JSON.stringify(data))
-        fetch(`https://hahow-recruit.herokuapp.com/heroes/${heroId}/profile`, {
-            method: "PATCH",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-        }).then((res) => {
-            console.log(res)
+        patchHeroProfile(heroId, data).then((res) => {
             setLoading(false)
+            console.log(res)
         }).catch(() => {
             alert('something went wrong')
         })
-
     }
+    if (isLoading) return <p>Loading...</p>
+    if (!data) return <p>No profile data</p>
     return (
         <DetailedContainer>
             <PanelContainer>
@@ -93,7 +93,6 @@ const HeroDetail = () => {
         </DetailedContainer>
     )
 }
-
 
 const getLayout = (page: ReactElement) => {
     return (
