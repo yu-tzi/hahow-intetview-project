@@ -1,10 +1,10 @@
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
 import HeroList from './heroList'
-import { DetailedContainer, PanelContainer, SinglePanel, HeroTitle, HeroNumber, PanelButton, ActionArea, ActionButton, RemainCount } from '@/style/pages/heroDetail.styled';
-import { getObjectSumNum } from './common/util';
-import { fetchHeroProfile, patchHeroProfile } from './common/fetchApi';
-import { HeroPanelArea } from './common/component/HeroPanelArea';
+import { DetailedContainer, ActionArea, ActionButton, RemainCount } from '@/style/pages/heroDetail.styled';
+import { getObjectSumNum } from '../../common/util';
+import { fetchHeroProfile, patchHeroProfile } from '../../common/fetchApi';
+import { HeroPanelArea } from '../../common/component/HeroPanelArea';
 
 interface HeroDtail {
     [key: string]: number
