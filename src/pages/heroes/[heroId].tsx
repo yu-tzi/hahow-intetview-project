@@ -4,6 +4,7 @@ import HeroList from './heroList'
 import { DetailedContainer, PanelContainer, SinglePanel, HeroTitle, HeroNumber, PanelButton, ActionArea, ActionButton, RemainCount } from '@/style/pages/heroDetail.styled';
 import { getObjectSumNum } from './common/util';
 import { fetchHeroProfile, patchHeroProfile } from './common/fetchApi';
+import { HeroPanelArea } from './common/component/HeroPanelArea';
 
 interface HeroDtail {
     [key: string]: number
@@ -76,16 +77,7 @@ const HeroDetail = () => {
     if (!data) return <p>No profile data</p>
     return (
         <DetailedContainer>
-            <PanelContainer>
-                {Object.keys(data).map((key, index) => (
-                    <SinglePanel key={key + index}>
-                        <HeroTitle>{key}</HeroTitle>
-                        <PanelButton disabled={!remainCount} onClick={() => { onClickButtonAction(key, 1) }}>+</PanelButton>
-                        <HeroNumber>{data[key]}</HeroNumber>
-                        <PanelButton disabled={data[key] < 1} onClick={() => { onClickButtonAction(key, -1) }}>-</PanelButton>
-                    </SinglePanel>
-                ))}
-            </PanelContainer>
+            <HeroPanelArea data={data} remainCount={remainCount || 0} clickAction={onClickButtonAction}/>
             <ActionArea>
                 <RemainCount>剩餘點數 : {remainCount}</RemainCount>
                 <ActionButton onClick={onClickSendData}>儲存</ActionButton>
