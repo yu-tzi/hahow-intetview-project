@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import Image from 'next/image'
 import { useRouter } from "next/router"
 import { CardsContainer, CardBody, CardName } from '@/style/component/heroList.styled';
-import { fetchHeroList } from "../../../common/fetchApi";
+import { fetchHeroList } from "../../../utils/fetchApi";
 
 interface HeroListData {
     id: string, name: string, image: string
