@@ -1,49 +1,7 @@
 import { useRouter } from 'next/router'
 import { ReactElement, useEffect, useState } from 'react'
 import HeroList from './heroList'
-import styled from 'styled-components'
-
-const DetailedContainer = styled.div`
-    display: flex;
-    max-width: 850px;
-    padding: 20px 45px;
-    flex-flow: row wrap;
-    border: 1px solid #504646;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 20px;
-    justify-content: space-between;
-`
-
-const PanelContainer = styled.div`
-`
-const SinglePanel = styled.div`
-    margin: 20px;
-    display: flex;
-`
-const HeroTitle = styled.div`
-    font-size: 20px;
-    margin-right: 15px;
-    width: 25px;
-    text-align: center;
-`
-const HeroNumber = styled.div`
-    font-size: 20px;
-    width: 25px;
-    text-align: center;
-`
-const PanelButton = styled.button`
-    margin: 0px 10px;
-`
-const ActionArea = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: end;
-`
-const ActionButton = styled.button``
-const RemainCount = styled.div`
-    margin-bottom: 10px;
-`
+import { DetailedContainer, PanelContainer, SinglePanel, HeroTitle, HeroNumber, PanelButton, ActionArea, ActionButton, RemainCount } from '@/style/pages/heroDetail.styled';
 
 const HeroDetail = () => {
     interface HeroDatil {
@@ -56,7 +14,7 @@ const HeroDetail = () => {
     const [availableCount, setAvailableCount] = useState<number | null>(null)
     const [isLoading, setLoading] = useState(false)
     useEffect(() => {
-        if(!heroId && heroId !== '0'){
+        if (!heroId && heroId !== '0') {
             return
         }
         setLoading(true)
@@ -69,7 +27,7 @@ const HeroDetail = () => {
                 const sumData = Object.values(data).reduce((acc, cur) => acc + cur);
                 console.log(sumData)
                 setAvailableCount(sumData)
-            }).catch(()=>{
+            }).catch(() => {
                 setData(null)
                 setLoading(false)
             })
@@ -111,7 +69,7 @@ const HeroDetail = () => {
         }).then((res) => {
             console.log(res)
             setLoading(false)
-        }).catch(()=>{
+        }).catch(() => {
             alert('something went wrong')
         })
 
@@ -120,7 +78,7 @@ const HeroDetail = () => {
         <DetailedContainer>
             <PanelContainer>
                 {Object.keys(data).map((key, index) => (
-                    <SinglePanel key={key+index}>
+                    <SinglePanel key={key + index}>
                         <HeroTitle>{key}</HeroTitle>
                         <PanelButton disabled={!remainCount} onClick={() => { onClickButtonAction(key, 1) }}>+</PanelButton>
                         <HeroNumber>{data[key]}</HeroNumber>

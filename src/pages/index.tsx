@@ -1,14 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
-import styled from 'styled-components'
-
-const Title = styled.h1`
-  margin: 30px;
-  text-align: center;
-`
-const LinkButton = styled.div`
-  text-align: center;
-`
+import { Title, LinkButton } from '../style/pages/homePage.styled'
 
 export default function Home() {
   return (

@@ -1,11 +1,6 @@
 import { ReactElement } from "react"
 import HeroList from "./heroList"
-import styled from 'styled-components'
-
-const Wording = styled.div`
-    width: fit-content;
-    margin: 30px auto;
-`
+import { Wording } from '@/style/pages/heroIndex.styled';
 
 const HeroMainPage = () => {
     return (
