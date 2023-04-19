@@ -45,7 +45,7 @@ const HeroDetail = () => {
         }
         const nowSumData = getObjectSumNum(data)
         nowSumData && setRemainCount(availableCount - nowSumData)
-    }, [data])
+    }, [data, availableCount])
     const onClickButtonAction = (key: string, count: number) => {
         setData((prevData) => {
             if (!prevData) {
