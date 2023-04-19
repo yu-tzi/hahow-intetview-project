@@ -2,6 +2,7 @@ import Link from "next/link"
 import { useEffect, useState } from "react"
 import styled from 'styled-components'
 import Image from 'next/image'
+import { useRouter } from "next/router"
 
 const CardsContainer = styled.div`
     display: flex;
@@ -13,10 +14,10 @@ const CardsContainer = styled.div`
     margin-right: auto;
     padding: 0px 20px;
 `
-const CardBody = styled.a`
+const CardBody = styled.a<{ idSelected: boolean }>`
     width: auto;
     height: 250px;
-    border: 1px solid #504646;
+    border: ${p => (p.idSelected ? '5px solid #c7c7c7;' : '1px solid #504646;')};
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
@@ -37,6 +38,8 @@ const HeroList = () => {
     }
     const [data, setData] = useState<HeroDate[] | null>(null)
     const [isLoading, setLoading] = useState(false)
+    const [pageId, setPageId] = useState<string>('')
+    const router = useRouter()
     useEffect(() => {
         setLoading(true)
         fetch('https://hahow-recruit.herokuapp.com/heroes')
@@ -47,6 +50,10 @@ const HeroList = () => {
                 setLoading(false)
             })
     }, [])
+    useEffect(()=>{
+        const id = router?.query?.heroId?.[0] || ''
+        setPageId(id)
+    },[router])
 
     if (isLoading) return <p>Loading...</p>
     if (!data) return <p>No profile data</p>
@@ -56,7 +63,7 @@ const HeroList = () => {
                 data.map((d) => {
                     return (
                         <Link href={`/heroes/${d.id}`} key={d.id} passHref legacyBehavior>
-                            <CardBody>
+                            <CardBody idSelected={d.id === pageId}>
                                 <Image
                                     src={d.image}
                                     alt={`picture of ${d.name}`}

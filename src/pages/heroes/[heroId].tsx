@@ -56,6 +56,9 @@ const HeroDetail = () => {
     const [availableCount, setAvailableCount] = useState<number | null>(null)
     const [isLoading, setLoading] = useState(false)
     useEffect(() => {
+        if(!heroId && heroId !== '0'){
+            return
+        }
         setLoading(true)
         fetch(`https://hahow-recruit.herokuapp.com/heroes/${heroId}/profile`)
             .then((res) => res.json())
@@ -66,6 +69,9 @@ const HeroDetail = () => {
                 const sumData = Object.values(data).reduce((acc, cur) => acc + cur);
                 console.log(sumData)
                 setAvailableCount(sumData)
+            }).catch(()=>{
+                setData(null)
+                setLoading(false)
             })
     }, [heroId])
     const checkRemain = () => {
@@ -105,6 +111,8 @@ const HeroDetail = () => {
         }).then((res) => {
             console.log(res)
             setLoading(false)
+        }).catch(()=>{
+            alert('something went wrong')
         })
 
     }
